@@ -84,3 +84,6 @@ kubectl exec --stdin --tty --container=nccl-test ${POD_NAME_2} -- /bin/bash
 
 # Install net tools if needed to troubleshoot
 apt update && apt upgrade -y && apt install iputils-ping -y && apt install dnsutils -y && apt install net-tools -y
+
+# Clean up when you are done
+${CT_PATH}/gcluster destroy ${DEPLOYMENT_NAME}
