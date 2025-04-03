@@ -26,16 +26,16 @@ kind: Job
 metadata:
   name: oli-dws-job-zone-c
   labels:
-    kueue.x-k8s.io/queue-name: dws-local-queue #### DWS
+    kueue.x-k8s.io/queue-name: dws-local-queue #### DWS FLEX
   annotations:
-    provreq.kueue.x-k8s.io/maxRunDurationSeconds: "3600"  #### DWS
+    provreq.kueue.x-k8s.io/maxRunDurationSeconds: "3600"  #### DWS FLEX
 spec:
   parallelism: 2
   completions: 2
-  backoffLimit: 0                       # moved by Olivier
+  backoffLimit: 0
   completionMode: Indexed
   template:
-    metadata:        # POD Template - so annotations for pods go here
+    metadata:
       annotations:
         devices.gke.io/container.tcpxo-daemon: |+
           - path: /dev/nvidia0
@@ -64,15 +64,15 @@ spec:
           ]
     spec:
       hostname: host-c
-      tolerations:                      #### DWS
-      - key: "nvidia.com/gpu"           #### DWS
-        operator: "Exists"              #### DWS
-        effect: "NoSchedule"            #### DWS
+      tolerations:                      #### DWS FLEX
+      - key: "nvidia.com/gpu"           #### DWS FLEX
+        operator: "Exists"              #### DWS FLEX
+        effect: "NoSchedule"            #### DWS FLEX
       nodeSelector:
         cloud.google.com/gke-nodepool: a3-megagpu-8g-a3megagpupool
       subdomain: nccl-domain
       containers:
-      - name: nccl-test         # the main workload
+      - name: nccl-test         # Main workload
         image: us-docker.pkg.dev/gce-ai-infra/gpudirect-tcpxo/nccl-plugin-gpudirecttcpx-dev:v1.0.8-1
         imagePullPolicy: Always
         command:
@@ -107,7 +107,7 @@ spec:
         resources:
           limits:
             nvidia.com/gpu: 8
-      - name: tcpxo-daemon
+      - name: tcpxo-daemon      # TCPXO Sidecar
         image: us-docker.pkg.dev/gce-ai-infra/gpudirect-tcpxo/tcpgpudmarxd-dev:v1.0.14
         imagePullPolicy: Always
         command: ["/bin/sh", "-c"]
