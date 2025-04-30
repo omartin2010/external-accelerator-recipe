@@ -23,7 +23,7 @@ export BASE_DEPLOYMENT_NAME=a3mega-flex-slurm-base
 export IMAGE_DEPLOYMENT_NAME=a3mega-flex-slurm-image
 export CLUSTER_DEPLOYMENT_NAME=a3mega-flex-slurm-clu
 export SLURM_CLUSTER_NAME=flexclu
-export FILESTORE_IP=10.33.0.2                           # change after step 2
+export FILESTORE_IP=<...>                           # change after step 2
 export DISK_SIZE_GB=200
 export CT_PATH=../cluster-toolkit
 export BP_PATH=blueprints/a3m-toolkit-blueprints/release-candidate-multifile
@@ -52,7 +52,7 @@ ${CT_PATH}/gcluster deploy -w -d ${BP_PATH}/deployment-base.yaml \
 
 # once applied, get the IP address for the Filestore instance and populate it 
 # to the variables section above. or below.
-export FILESTORE_IP=10.140.0.2
+export FILESTORE_IP=<...>
 
 # Deploy image 
 ${CT_PATH}/gcluster deploy -w -d ${BP_PATH}/deployment-base.yaml \
